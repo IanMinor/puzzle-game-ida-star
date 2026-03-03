@@ -1,5 +1,6 @@
 def h1(state, goal, n):
     total_misplaced = 0
+    
     for i in range(n*n):
         if state[i] != 0 and state[i] != goal[i]:
             total_misplaced += 1
