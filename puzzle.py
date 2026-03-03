@@ -1,7 +1,5 @@
 import random
 
-n_dimension, k_movement = map(int, input().split())
-
 INVERSE_MOVES = {
     'U': 'D',
     'D': 'U',
@@ -12,8 +10,11 @@ INVERSE_MOVES = {
 def generate_goal_state(n):
     return tuple(list(range(1, n*n)) + [0])
 
+def locate_zero_index(state):
+    return state.index(0)
+
 def valid_moves(state, n):
-    zero_index = state.index(0)
+    zero_index = locate_zero_index(state)
     row = zero_index // n
     col = zero_index % n
     moves = []
@@ -29,10 +30,9 @@ def valid_moves(state, n):
     
     return moves
 
-
 def apply_move(state, move, n):
     state = list(state)
-    zero_index = state.index(0)
+    zero_index = locate_zero_index(state)
     
     if move == 'U':
         swap_index = zero_index - n
@@ -45,6 +45,18 @@ def apply_move(state, move, n):
 
     state[zero_index], state[swap_index] = state[swap_index], state[zero_index]
     return tuple(state)
+
+def cost(node, successor):
+    return 1
+
+# Genera los sucesores de un estado dado
+def succesors(state, n):
+    moves = valid_moves(state, n)
+    generated_sucessors = []
+    for move in moves:
+        new_state = apply_move(state, move, n)
+        generated_sucessors.append((new_state, move))
+    return generated_sucessors
 
 def generate_instance(n, k):
     state = generate_goal_state(n)
@@ -68,12 +80,17 @@ def generate_instance(n, k):
     
     return state, path
 
-
 def print_board(state, n):
     for i in range(n):
         print(' '.join(str(x) for x in state[i*n:(i+1)*n]))
+        
+def is_goal(state, goal):
+    return state == goal
 
-initial_state, moves = generate_instance(n_dimension, k_movement)
-print_board(initial_state, n_dimension)
-print(' '.join(moves))
-
+if __name__ == "__main__":
+    n_dimension, k_movement = map(int, input().split())
+    initial_state, moves = generate_instance(n_dimension, k_movement)
+    goal_state = generate_goal_state(n_dimension)
+    print_board(initial_state, n_dimension)
+    print_board(goal_state, n_dimension)
+    print(' '.join(moves))
