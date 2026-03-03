@@ -1,5 +1,6 @@
 from puzzle import is_goal, successors, cost
 
+# todo: optimizar path_states usando un set
 def search(path, g, threshold, n, goal, h_func):
     node = path[-1][0]
     path_states = [p[0] for p in path]

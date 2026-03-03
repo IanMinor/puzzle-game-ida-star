@@ -87,10 +87,3 @@ def print_board(state, n):
 def is_goal(state, goal):
     return state == goal
 
-if __name__ == "__main__":
-    n_dimension, k_movement = map(int, input().split())
-    initial_state, moves = generate_instance(n_dimension, k_movement)
-    goal_state = generate_goal_state(n_dimension)
-    print_board(initial_state, n_dimension)
-    print_board(goal_state, n_dimension)
-    print(' '.join(moves))
