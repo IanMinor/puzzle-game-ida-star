@@ -50,13 +50,13 @@ def cost(node, successor):
     return 1
 
 # Genera los sucesores de un estado dado
-def succesors(state, n):
+def successors(state, n):
     moves = valid_moves(state, n)
-    generated_sucessors = []
+    generated_successors = []
     for move in moves:
         new_state = apply_move(state, move, n)
-        generated_sucessors.append((new_state, move))
-    return generated_sucessors
+        generated_successors.append((new_state, move))
+    return generated_successors
 
 def generate_instance(n, k):
     state = generate_goal_state(n)
