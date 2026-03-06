@@ -15,5 +15,7 @@ if __name__ == "__main__":
     if solution_path:
         print("\nSolution found with cost:", cost)
         print("Moves:", [move for _, move in solution_path[1:]])
+        print("Final State:")
+        print_board(solution_path[-1][0], n_dimension)
     else:
         print("\nNo solution found.")
