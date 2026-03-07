@@ -51,5 +51,20 @@ def h3(state, goal, n):
     
     return total_conflicts * 2
 
+def h4(state, goal, n):
+    tiles_misplaced = 0
+    
+    for i in range(n*n):
+        if state[i] != 0:
+            target_index = state[i] - 1
+            current_row, current_col = divmod(i, n)
+            target_row, target_col = divmod(target_index, n)
+            if current_row != target_row:
+                tiles_misplaced += 1
+            if current_col != target_col:
+                tiles_misplaced += 1
+            
+    return tiles_misplaced
+
 def heuristic(state, goal, n):
-    return max(h1(state, goal, n), h2(state, goal, n))          
+    return max(h1(state, goal, n), h2(state, goal, n), h3(state, goal, n), h4(state, goal, n))          
