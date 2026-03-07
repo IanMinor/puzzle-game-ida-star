@@ -66,5 +66,13 @@ def h4(state, goal, n):
             
     return tiles_misplaced
 
+def h5(state, goal, n):
+    total_placed = 0
+    
+    for i in range(n*n):
+        if state[i] != 0 and state[i] == goal[i]:
+            total_placed += 1
+    return total_placed
+
 def heuristic(state, goal, n):
-    return max(h1(state, goal, n), h2(state, goal, n), h3(state, goal, n), h4(state, goal, n))          
+    return max(h1(state, goal, n), h2(state, goal, n), h3(state, goal, n), h4(state, goal, n), h5(state, goal, n))          
