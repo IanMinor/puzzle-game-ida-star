@@ -42,10 +42,10 @@ def h3(state, goal, n):
             if current_col == target_col:
                 tiles_on_correct_col[current_col] = tiles_on_correct_col.get(current_col, []) + [(state[i], current_row)]
 
-    for row, pieces in tiles_on_correct_row.items():
+    for _, pieces in tiles_on_correct_row.items():
         count = count_conflicts_in_line(pieces)
         total_conflicts += count
-    for col, pieces in tiles_on_correct_col.items():
+    for _, pieces in tiles_on_correct_col.items():
         count = count_conflicts_in_line(pieces)
         total_conflicts += count
     
@@ -74,5 +74,21 @@ def h5(state, goal, n):
             total_placed += 1
     return total_placed
 
-def heuristic(state, goal, n):
-    return max(h1(state, goal, n), h2(state, goal, n), h3(state, goal, n), h4(state, goal, n), h5(state, goal, n))          
+def heuristic(state, goal, n, weights=(0.1, 0.3, 0.2, 0.1, -0.1)):
+    max_h1 = n**2 - 1
+    max_h2 = 2 * (n - 1) * (n**2 - 1) / 3
+    max_h3 = 2 * (n**2) * (n - 1)
+    max_h4 = 2 * (n**2 - 1)
+    max_h5 = n**2 - 1 
+    
+    h1_value = h1(state, goal, n) / max_h1
+    h2_value = h2(state, goal, n) / max_h2
+    h3_value = h3(state, goal, n) / max_h3
+    h4_value = h4(state, goal, n) / max_h4
+    h5_value = h5(state, goal, n) / max_h5
+    
+    weighted_sum = (weights[0] * h1_value + weights[1] * h2_value + weights[2] * h3_value +
+                    weights[3] * h4_value + weights[4] * h5_value)
+    
+    # return weighted_sum
+    return h2(state, goal, n)       
